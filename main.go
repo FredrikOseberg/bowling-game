@@ -22,6 +22,7 @@ import "fmt"
 // |-, 3|5, -|9, /|2, 5|3, 2|4, 2|3, 3|4, /|X |X, 2, 5|
 // score: 103
 
+// Frame represents data relevant to a round of bowling
 type Frame struct {
 	RollIndex       int
 	Total           int
@@ -32,13 +33,13 @@ type Frame struct {
 func main() {
 	//input := []int{10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 1, 4}
 	//input := []int{2, 3, 5, 4, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 3, 2}
-	// input := []int{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}
-	input := []int{1, 5, 8, 2, 2, 4, 10, 10, 5, 3, 9, 1, 10, 10, 10, 4, 3}
+	input := []int{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}
+	//input := []int{1, 5, 8, 2, 2, 4, 10, 10, 5, 3, 9, 1, 10, 10, 10, 4, 3}
 	//input := []int{1, 5, 8, 2, 2, 4, 10, 10, 5, 3, 9, 1, 10, 10, 9, 1, 4, 3}
 	bowlingGame(input)
 }
 
-func bowlingGame(rolls []int) {
+func bowlingGame(rolls []int) error {
 	frames := getFrames(rolls)
 
 	lastFrame := frames[len(frames)-1]
@@ -46,15 +47,15 @@ func bowlingGame(rolls []int) {
 		lastItems := rolls[lastFrame.RollIndex+1:]
 
 		if len(lastItems) != 2 && lastFrame.FrameType == "strike" || len(lastItems) != 1 && lastFrame.FrameType == "spare" {
-			fmt.Print("Invalid input")
-			return
+			return fmt.Errorf("Invalid input")
 		}
-
 	}
 
 	calculatedFrames, totalScore := calculateScore(frames, rolls)
 
 	renderResult(calculatedFrames, totalScore, rolls)
+
+	return nil
 }
 
 func renderResult(frames []Frame, score int, rolls []int) {

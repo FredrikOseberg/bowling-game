@@ -27,10 +27,6 @@ func TestGetFrames(t *testing.T) {
 			Input:  []int{2, 3, 5, 4, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 3, 2, 1, 2, 3, 5, 6, 7},
 			Result: 0,
 		},
-		{
-			Input:  []int{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
-			Result: 0,
-		},
 	}
 
 	for _, testCase := range cases {
@@ -62,6 +58,27 @@ func TestCalculateResult(t *testing.T) {
 
 		if totalScore != testCase.Result {
 			t.Errorf("Wanted: %d, Received: %d", testCase.Result, totalScore)
+		}
+	}
+}
+
+func TestBowlingGame(t *testing.T) {
+	cases := []TestCases{
+		{
+			Input:  []int{2, 3, 5, 4, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 9, 1, 3, 7, 8, 2, 3},
+			Result: 0,
+		},
+		{
+			Input:  []int{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
+			Result: 0,
+		},
+	}
+
+	for _, testCase := range cases {
+		err := bowlingGame(testCase.Input)
+
+		if err == nil {
+			t.Errorf("Wanted: error, Received: %v", err)
 		}
 	}
 }
